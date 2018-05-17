@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="row main">
+    <div class="row">
+
+      <div class="alert alert-dismissible" [ngClass]="{
+        'alert-danger fade in': (message == 2 || message == 3),
+        'alert-success fade in': message == 1
+      }">
+        <a href="javascript:void(0)" class="close" data-dismiss="alert" *ngIf="message == 3 || message == 2 || message == 1" aria-label="close">&times;</a>
+        <span *ngIf="message == 3">Please add atleast one record.</span>
+        <span *ngIf="message == 2">Please Select atleast one record.</span>
+        <span *ngIf="message == 1">Record added successfully.</span>
+      </div>
+
+      <div class="col-md-5">
+        <div class="panel-heading">
+          <div class="panel-title text-center">
+            <h4 class="title">Add User</h4>
+            <hr />
+          </div>
+        </div>
+        <div class="main-login main-center">
+          <form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="onSubmit()">
+            <fieldset formGroupName="name">
+
+              <div class="form-group" [ngClass]="{
+                'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
+                'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+              }">
+                <label for="lname" class="control-label">First Name</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-user fa" aria-hidden="true"></i>
+                  </span>
+                  <input type="text" class="form-control" formControlName="firstName" required name="firstName" id="fname" placeholder="Enter First Name"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group" [ngClass]="{
+                'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
+                'has-success': lastName.valid && (lastName.dirty || lastName.touched)
+              }">
+                <label for="name" class="control-label">Last Name</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-user fa" aria-hidden="true"></i>
+                  </span>
+                  <input type="text" class="form-control" formControlName="lastName" required name="lastName" id="name" placeholder="Enter Last Name"
+                  />
+
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group" [ngClass]="{
+                'has-danger': email.invalid && (email.dirty || email.touched),
+                'has-success': email.valid && (email.dirty || email.touched)
+           }">
+              <label for="email" class="control-label">Your Email</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-envelope fa" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" formControlName="email" required name="email" id="email" placeholder="Enter your Email"
+                />
+
+              </div>
+            </div>
+
+
+            <div class="form-group" [ngClass]="{
+                'has-danger': password.invalid && (password.dirty || password.touched),
+                'has-success': password.valid && (password.dirty || password.touched)
+           }">
+              <label for="password" class="control-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+                </span>
+                <input type="password" class="form-control" formControlName="password" required name="password" id="password" placeholder="Enter your Password"
+                />
+
+              </div>
+            </div>
+
+            <div class="form-group ">
+              <button type="submit" [disabled]="!myform.valid" class="btn btn-primary btn-lg btn-block login-button">Save</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="panel-heading">
+          <div class="panel-title text-center">
+            <h4 class="title">User List</h4>
+            <hr />
+          </div>
+        </div>
+        <div class=" text-right">
+          <button type="button" (click)="deleteRecord()" class="btn btn-danger">Delete</button>
+        </div>
+        <br>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" [checked]="isAllChecked()" (change)="checkAll($event)">
+              </th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of userList; let index = index">
+              <th>
+                <input type="checkbox" [(ngModel)]="u.isCheck">
+              </th>
+              <td>{{u.name.firstName}}</td>
+              <td>{{u.name.lastName}}</td>
+              <td>{{u.email}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
